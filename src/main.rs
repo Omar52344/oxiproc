@@ -126,6 +126,12 @@ impl App {
         Ok(())
     }
 
+    fn get_selected_pid(&self) -> Option<u32> {
+        self.state
+            .selected()
+            .and_then(|i| self.processes.get(i).map(|p| p.pid))
+    }
+
     fn set_status<S: Into<String>>(&mut self, msg: S) {
         self.status_message = Some((msg.into(), Instant::now()));
     }
@@ -205,9 +211,28 @@ fn main() -> Result<()> {
                 _ => {}
             },
             AppEvent::ProcessesUpdated(data, stats) => {
+                let selected_pid = app.get_selected_pid();
                 app.processes = data;
                 app.global_stats = stats;
+
+                if let Some(pid) = selected_pid {
+                    if let Some(index) = app.processes.iter().position(|p| p.pid == pid) {
+                        app.state.select(Some(index));
+                    } else {
+                        // Process lost (killed or ended), clamp selection to valid range
+                        if let Some(curr) = app.state.selected() {
+                            if curr >= app.processes.len() {
+                                if app.processes.is_empty() {
+                                    app.state.select(None);
+                                } else {
+                                    app.state.select(Some(app.processes.len() - 1));
+                                }
+                            }
+                        }
+                    }
+                }
             }
+
             AppEvent::Tick => {
                 app.on_tick();
             }
