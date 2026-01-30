@@ -30,25 +30,42 @@ Oxiproc utiliza un sistema visual intuitivo para identificar qué procesos son s
 | `k` | Matar (cerrar) el proceso seleccionado (Solo procesos de Usuario) |
 | `q` / `Esc` | Salir de Oxiproc |
 
-## 🛠️ Instalación y Uso
+## 🛠️ Instalación
 
-### Prerrequisitos
-Asegúrate de tener instalado el [toolchain de Rust](https://www.rust-lang.org/tools/install) (edición 2021 o superior).
+### Opción 1: Instalación Rápida (Binarios)
+No necesitas tener Rust instalado. Simplemente descarga la última versión disponible en la sección de [Releases](https://github.com/Omar52344/oxiproc/releases).
 
-### Pasos
+#### 🪟 Windows
+1. Descarga y extrae el archivo ZIP.
+2. Busca el archivo `install.ps1`, haz **clic derecho** sobre él y selecciona **"Ejecutar con PowerShell"**.
+3. El script copiará el programa y lo añadirá a tu variable PATH.
+4. Reinicia tu terminal y escribe `oxiproc` para empezar.
 
-1.  **Clonar el repositorio**:
+#### 🐧 Linux
+1. Descarga y extrae el archivo TAR.GZ.
+2. Abre una terminal en la carpeta extraída y ejecuta:
+   ```bash
+   chmod +x install.sh
+   ./install.sh
+   ```
+3. El script instalará el binario en `~/.local/bin`. Si esa ruta no está en tu PATH, el script te indicará cómo agregarla.
+
+---
+
+### Opción 2: Compilar desde Código Fuente
+Ideal si quieres modificar el código o contribuir al proyecto.
+
+1.  Asegúrate de tener el [toolchain de Rust](https://www.rust-lang.org/tools/install) instalado.
+2.  **Clonar el repositorio**:
     ```bash
-    git clone https://github.com/tu-usuario/oxiproc.git
+    git clone https://github.com/Omar52344/oxiproc.git
     cd oxiproc
     ```
-
-2.  **Compilar para producción**:
+3.  **Compilar para producción**:
     ```bash
     cargo build --release
     ```
-
-3.  **Ejecutar**:
+4.  **Ejecutar**:
     ```bash
     ./target/release/oxiproc
     ```
